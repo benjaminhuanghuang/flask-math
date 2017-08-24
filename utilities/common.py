@@ -1,51 +1,23 @@
 import time
-import boto3
-from flask import current_app
-import datetime
-import arrow
-import bleach
 
 def utc_now_ts():
+    # time() returns the time in seconds since the epoch as a floating point number
     return int(time.time())
+
+def local_now_str():
+    # time() returns the time in seconds since the epoch as a floating point number
+    # time.localtime() Like gmtime() but converts to local time. include summer time
+    return time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(time.time()))
+
+def utc_now_str():
+    # time() returns the time in seconds since the epoch as a floating point number
+    # time.gmtime Convert a time expressed in seconds since the epoch to a struct_time in UTC
+    return time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(time.time()))
 
 def utc_now_ts_ms():
     return lambda: int(round(time.time() * 1000))
 
-def ms_stamp_humanize(ts):
-    ts = datetime.datetime.fromtimestamp(ts/1000.0)
-    return arrow.get(ts).humanize()
 
-def linkify(text):
-    text = bleach.clean(text, tags=[], attributes={}, styles=[], strip=True)
-    return bleach.linkify(text)
 
-def email(to_email, subject, body_html, body_text):
-    # don't run this if we're running a test or setting is False
-    if current_app.config.get('TESTING') or not current_app.config.get('AWS_SEND_MAIL'):
-        return False
-
-    client = boto3.client('ses')
-    return client.send_email(
-        Source='webmaster@fromzero.io',
-            Destination={
-                'ToAddresses': [
-                    to_email,
-                ]
-            },
-        Message={
-            'Subject': {
-                'Data': subject,
-                'Charset': 'UTF-8'
-            },
-            'Body': {
-                'Text': {
-                    'Data': body_text,
-                    'Charset': 'UTF-8'
-                },
-                'Html': {
-                    'Data': body_html,
-                    'Charset': 'UTF-8'
-                },
-            }
-        }
-    )
+if __name__ == '__main__':
+    print(utc_now_str())

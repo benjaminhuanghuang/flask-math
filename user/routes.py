@@ -1,44 +1,41 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, abort
-import bcrypt
-import uuid
-import os
-from werkzeug.utils import secure_filename
-from mongoengine import Q
+from flask import Blueprint, request, redirect, session, url_for
+from flask_bcrypt import Bcrypt
+import json
 
 from user.models import User
 
-
 user_routes = Blueprint('user_routes', __name__)
 
-@user_routes.route('/login', methods=('POST'))
+bcrypt = Bcrypt()
+
+
+@user_routes.route('/test')
+def test():
+    return "test"
+
+
+@user_routes.route('/login', methods=['POST'])
 def login():
-    form = LoginForm()
-    error = None
+    username = request.json.get('username')
+    password = request.json.get('password')
 
-    if request.method == 'GET' and request.args.get('next'):
-        session['next'] = request.args.get('next')
+    user = User.objects.filter(username=username).first()
+    if user:
+        if bcrypt.check_password_hash(user.password, password):
+            session['username'] = username
+            user_info = {"user_id": str(user.id),
+                         "user_name": user.username,
+                         "first_name": user.first_name,
+                         "last_name": user.last_name,
+                         'role': user.role
+                         }
+        else:
+            user_info = {}
 
-    if form.validate_on_submit():
-        user = User.objects.filter(
-            username=form.username.data
-            ).first()
-        if user:
-            if bcrypt.hashpw(form.password.data, user.password) == user.password:
-                session['username'] = form.username.data
-                if 'next' in session:
-                    next = session.get('next')
-                    session.pop('next')
-                    return redirect(next)
-                else:
-                    return redirect(url_for('home_routes.home'))
-            else:
-                user = None
-        if not user:
-            error = 'Incorrect credentials'
-    return render_template('user/login.html', form=form, error=error)
+    return json.JSONEncoder().encode(user_info)
+
 
 @user_routes.route('/logout')
 def logout():
     session.pop('username')
     return redirect(url_for('user_routes.login'))
-

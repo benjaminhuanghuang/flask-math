@@ -32,7 +32,4 @@ def create_app(**config_overrides):
     from user.routes import user_routes
     app.register_blueprint(user_routes)
 
-    from home.routes import home_routes
-    app.register_blueprint(home_routes)
-
     return app
