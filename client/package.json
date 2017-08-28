@@ -1,18 +1,17 @@
 {
-  "name": "client",
+  "name": "flask-reack-math-client",
   "version": "0.1.0",
   "private": true,
   "proxy": {
     "/auth/google": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost:5010"
     },
     "/api/*": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost:5010"
     }
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "materialize-css": "^0.100.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
@@ -21,7 +20,8 @@
     "react-stripe-checkout": "^2.6.3",
     "redux": "^3.7.2",
     "redux-form": "^7.0.3",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
     "react-scripts": "1.0.11"

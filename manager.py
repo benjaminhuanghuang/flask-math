@@ -13,7 +13,7 @@ manager.add_command("run", Server(
     use_debugger=True,
     use_reloader=True,
     host=os.getenv('IP', '0.0.0.0'),
-    port=9527
+    port=5010
 ))
 
 if __name__ == '__main__':

@@ -5,12 +5,22 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from 'redux-thunk';
 //
 import reducers from './reducers';
-import App from './components/App';
+import { AUTH_USER } from './modules/auth/AuthActions';
+import App from './App';
 
 
 import registerServiceWorker from "./registerServiceWorker";
 
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
+
+const token = localStorage.getItem('token');
+// If we have a token, consider the user to be signed in
+if (token) {
+  // we need to update application state
+  store.dispatch({ type: AUTH_USER });
+}
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -18,7 +28,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-// Client side env
-console.log("Stripe key is ", process.env.REACT_APP_STRIPE_KEY);
-console.log("Env is ", process.env.NODE_ENV);
+
 registerServiceWorker();

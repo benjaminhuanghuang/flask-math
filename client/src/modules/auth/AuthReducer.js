@@ -3,7 +3,7 @@ import {
   UNAUTH_USER,
   AUTH_ERROR,
   FETCH_MESSAGE
-} from '../actions/types';
+} from './AuthActions';
 
 export default function(state = {}, action) {
   switch(action.type) {
