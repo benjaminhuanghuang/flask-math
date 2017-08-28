@@ -3,6 +3,8 @@
 
 ## Dev
     - client side is served by webpack-dev-server running at 3010. All api call call with be redirected to server(localhost:5010) 
+      this approach can avoid cros issue.
+      
     - server side is a flask app running at 5010
 
 ## Prod
