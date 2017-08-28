@@ -31,14 +31,14 @@ export function siginUser_old_style({ email, password }) {
 
 export const loginUser = ({ username, password }) => async dispatch => {
     try {
-        const res = axios.post(`/api/login`, {username, password});
-
+        const res = await axios.post(`/api/login`, {username, password});
         // - Update state to indicate user is authenticated
         dispatch({type: AUTH_USER});
         // - Save the JWT token
         localStorage.setItem('react-math-token', res.data.token);
     }
     catch (err) {
+        console.log(err);
         dispatch(authError('Bad Login Info'));
     }
 }
