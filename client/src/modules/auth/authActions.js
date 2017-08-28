@@ -31,7 +31,6 @@ export function siginUser_old_style({ email, password }) {
 
 export const loginUser = ({ username, password }) => async dispatch => {
     try {
-        debugger;
         const res = axios.post(`/api/login`, {username, password});
 
         // - Update state to indicate user is authenticated

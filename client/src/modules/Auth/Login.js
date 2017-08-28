@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {withRouter} from "react-router-dom";
 import * as actions from './AuthActions';
 
 // Import Style
@@ -19,9 +20,9 @@ class Login extends Component {
     }
 
     login() {
-        debugger;
         const {username, password} = this.state;
         this.props.loginUser({username, password});
+        this.props.history.push("/");
     }
 
     render() {
@@ -81,4 +82,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(Login);
+export default connect(mapStateToProps, actions)(withRouter(Login));

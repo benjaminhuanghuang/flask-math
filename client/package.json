@@ -2,11 +2,6 @@
   "name": "flask-reack-math-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/api/*": {
-      "target": "http://localhost:5010"
-    }
-  },
   "babel": {
     "presets": [
       "es2015",

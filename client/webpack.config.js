@@ -29,10 +29,14 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         contentBase: './public',
-        port: 3010
+        port: 3010,
+        "proxy": {
+        "/api/*": {
+            "target": "http://localhost:5010"
+        }
+    }
     },
     plugins: [
         new ExtractTextPlugin('public/style.css')
     ]
-
 };
