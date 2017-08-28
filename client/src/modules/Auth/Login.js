@@ -10,7 +10,7 @@ class Login extends Component {
   render() {
     return (
       <div style={{
-                backgroundImage: 'url("../../../asserts/bgclass4.jpg")',
+                backgroundImage: 'url("/asserts/bgclass4.jpg")',
                         opacity: '1',
                 backgroundColor: '#000000',
              backgroundPosition: 'center',
