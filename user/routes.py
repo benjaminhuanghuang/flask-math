@@ -1,8 +1,10 @@
-from flask import Blueprint, request, redirect, session, url_for
+from flask import Blueprint, request, redirect, session, url_for, jsonify, make_response
 from flask_bcrypt import Bcrypt
-import json
+import jwt
+from datetime import datetime, timedelta
 
 from user.models import User
+import settings
 
 user_routes = Blueprint('user_routes', __name__)
 
@@ -14,7 +16,8 @@ def test():
     return "test"
 
 
-@user_routes.route('/login', methods=['POST'])
+# login user and return a token
+@user_routes.route('/api/login', methods=['POST'])
 def login():
     username = request.json.get('username')
     password = request.json.get('password')
@@ -23,19 +26,43 @@ def login():
     if user:
         if bcrypt.check_password_hash(user.password, password):
             session['username'] = username
-            user_info = {"user_id": str(user.id),
-                         "user_name": user.username,
-                         "first_name": user.first_name,
-                         "last_name": user.last_name,
-                         'role': user.role
-                         }
+            token_str = generate_token(user).decode()
+            return jsonify({'token': token_str}), 200
         else:
-            user_info = {}
-
-    return json.JSONEncoder().encode(user_info)
+            return jsonify({'token': ''}), 403
 
 
-@user_routes.route('/logout')
+@user_routes.route('/api/logout')
 def logout():
     session.pop('username')
     return redirect(url_for('user_routes.login'))
+
+
+def generate_token(user):
+    # Expiration time is automatically verified in jwt.decode() and raises jwt.ExpiredSignatureError
+    token_payload = {'user_name': user['username'],
+                     'exp': (datetime.utcnow() + timedelta(minutes=60))}
+
+    token = jwt.encode(token_payload, settings.SECRET_KEY, algorithm='HS256')
+    return token
+
+def token_auth(token_str):
+    try:
+        token = str.encode(token_str)
+        token_payload = jwt.decode(token, settings.SECRET_KEY, algorithm='HS256')
+        user_name = token_payload['user_name']
+        user = User.objects.filter(username=user_name).first()
+    except jwt.ExpiredSignatureError:
+        user = None
+    except Exception as e:
+        user = None
+
+    return user
+
+if __name__ == "__main__":
+    user = {
+        "username": "ben",
+    }
+    token_str = generate_token(user).decode()
+    auth_user = token_auth(token_str)
+    print(auth_user)

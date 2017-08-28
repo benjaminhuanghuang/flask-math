@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: [
+        'babel-polyfill',
         './src/index.js'
     ],
     output: {
@@ -22,7 +23,8 @@ module.exports = {
             }]
     },
     resolve: {  // add following extension when module can not be found
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
+        modules: ['client', 'node_modules'],
     },
     devServer: {
         historyApiFallback: true,
