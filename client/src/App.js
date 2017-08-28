@@ -16,7 +16,7 @@ export default class App extends Component {
             <div className="container">
                 <Header/>
                 <Route path="/login" component={Login} />
-                <Route path="/" component={RequireAuth(Dashboard)} />
+                <Route exact path="/" component={RequireAuth(Dashboard)} />
             </div>
        </BrowserRouter>
     );
