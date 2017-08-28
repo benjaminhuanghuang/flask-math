@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './AuthActions';
-import {showFullPage} from '../../components/actions/index';
 
 // Import Style
 import styles from './Login.css';
@@ -39,21 +38,11 @@ class Login extends Component {
                   margin: 'auto',
                   fontSize: '14px'
                   }}>
-              { this.state.err.length > 0 && <span style={{ padding: '10px',color:'red'}}>{this.state.err}</span> }
-              <p style={{padding: '10px'}}><Input placeholder="Username"
-                        required={this.state.requireFirstName}
-                        onChange={(e) => {this.setState({accountName:e.target.value})}} onPressEnter	={()=>{this.login()}}/></p>
-              <p style={{padding: '10px'}}><Input placeholder="Password"
-                        required={this.state.requireFirstName}
-                        type="password"
-                        onChange={(e) => {this.setState({password:e.target.value})}} onPressEnter	={()=>{this.login()}}/> </p>
+              <p style={{padding: '10px'}}><Input placeholder="Username"/></p>
+              <p style={{padding: '10px'}}><Input placeholder="Password" type="password"/> </p>
               <p style={{padding: '15px'}}><Button type="primary"  onClick={()=>{this.login()}}>LOG IN</Button></p>
             </Card>
-
-
-
         </div>
-
       </div>
     );
   }

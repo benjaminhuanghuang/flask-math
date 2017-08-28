@@ -1,0 +1,36 @@
+@import "~antd/dist/antd.less";
+@import "custom.less";
+
+@color_1: #aaa;
+@font_family_1: 'Lato', sans-serif;
+
+/*
+  Global CSS file
+*/
+&::-webkit-input-placeholder {
+  color: @color_1;
+  font-weight: 300;
+}
+&::-moz-placeholder {
+  color: @color_1;
+  font-weight: 300;
+}
+&:-ms-input-placeholder {
+  color: @color_1;
+  font-weight: 300;
+}
+input {
+  &:-moz-placeholder {
+    color: @color_1;
+    font-weight: 300;
+  }
+}
+body {
+  background: #ececec;
+  font-family: @font_family_1;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+ul {
+  list-style-type: none;
+}

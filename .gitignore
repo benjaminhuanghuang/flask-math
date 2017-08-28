@@ -6,3 +6,5 @@ venv
 *.pyc
 .vscode
 __pychhe__
+/client/public/bundle.js
+/client/public/asserts/
