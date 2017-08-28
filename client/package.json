@@ -34,7 +34,8 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "css-loader": "^0.28.5",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.18.2",
+    "copy-webpack-plugin": "^4.0.1"
   },
   "scripts": {
     "start": "webpack-dev-server",

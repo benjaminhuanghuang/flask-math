@@ -1,9 +1,18 @@
-# Flask + MongoEngine + React + Redux web application
+# Flask + MongoEngine + React + Redux + Webpack web application
 
-## Reference
-    Advanced Scalable Python Web Development Using Flask
-    - https://www.udemy.com/advanced-python-flask/  
-    - https://github.com/fromzeroedu/flaskbook
+
+## Dev
+    - client side is served by webpack-dev-server running at 3010. All api call call with be redirected to server(localhost:5010) 
+    - server side is a flask app running at 5010
+
+## Prod
+    Only one server is running 
+    - webpack all client side code into client/public
+    - server use client/public as static folder to load the client side code.
+    
+
+
+
    
 
   
