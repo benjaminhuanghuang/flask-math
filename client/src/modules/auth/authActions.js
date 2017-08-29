@@ -1,5 +1,6 @@
 import axios from "axios";
-//
+import { BrowserHistory } from 'react-history';
+
 // Export Constants
 export const AUTH_USER = 'AUTH_USER';
 export const UNAUTH_USER = 'UNAUTH_USER';
@@ -19,6 +20,7 @@ export function siginUser_old_style({ email, password }) {
                 dispatch({type: AUTH_USER});
                 // - Save the JWT token
                 localStorage.setItem('react-math-token', response.data.token);
+                browserHistory.push('/');
             })
             .catch(err => {
                 // If request is bad...
@@ -29,13 +31,14 @@ export function siginUser_old_style({ email, password }) {
     }
 }
 
-export const loginUser = ({ username, password }) => async dispatch => {
+export const loginUser = ({ username, password , callback}) => async dispatch => {
     try {
         const res = await axios.post(`/api/login`, {username, password});
         // - Update state to indicate user is authenticated
         dispatch({type: AUTH_USER});
         // - Save the JWT token
         localStorage.setItem('react-math-token', res.data.token);
+        callback();
     }
     catch (err) {
         console.log(err);

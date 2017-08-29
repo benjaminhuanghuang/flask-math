@@ -16,7 +16,7 @@ import registerServiceWorker from "./registerServiceWorker";
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(RootReducers);
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('react-math-token');
 // If we have a token, consider the user to be signed in
 if (token) {
   // we need to update application state

@@ -21,8 +21,7 @@ class Login extends Component {
 
     login() {
         const {username, password} = this.state;
-        this.props.loginUser({username, password});
-        this.props.history.push("/");
+        this.props.loginUser({username, password, callback: ()=>{ this.props.history.push('/')}});
     }
 
     render() {
@@ -49,13 +48,8 @@ class Login extends Component {
                    }}>
 
 
-                    <Card title="Log in to Afficient Academy" style={{
-                 // position: 'relative',
-                  width: '320px',
-                  top:'100px',
-                  margin: 'auto',
-                  fontSize: '14px'
-                  }}>
+                    <Card title="Log in to Afficient Academy"
+                          style={{ width: '320px', top:'100px',margin: 'auto', fontSize: '14px'}}>
                         <p style={{padding: '10px'}}>
                             <Input placeholder="Username"
                                    onChange={(e) => {this.setState({username:e.target.value})}}
