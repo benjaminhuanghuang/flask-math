@@ -13,6 +13,11 @@
     - server use client/public as static folder to load the client side code.
     
 
+ ## Auth
+    Server side api /api/login returns a token
+    
+    Client side save the token into local storage and set authed = trun in react the store
+
 
 
    
