@@ -21,8 +21,7 @@
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "prop-types": "^15.5.10",
-    "antd": "2.12.8",
-    "react-history": "^0.18.2"
+    "antd": "2.12.8"
   },
   "devDependencies": {
     "react-scripts": "1.0.11",
