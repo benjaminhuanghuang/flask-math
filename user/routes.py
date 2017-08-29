@@ -26,10 +26,10 @@ def login():
     if user:
         if bcrypt.check_password_hash(user.password, password):
             session['username'] = username
-            token_str = generate_token(user).decode()
+            token_str = generate_token(user).decode('UTF-8')
             return jsonify({'token': token_str}), 200
         else:
-            return jsonify({'token': ''}), 403
+            return jsonify({'token': ''}), 401
 
 
 @user_routes.route('/api/logout')
@@ -46,6 +46,7 @@ def generate_token(user):
     token = jwt.encode(token_payload, settings.SECRET_KEY, algorithm='HS256')
     return token
 
+
 def token_auth(token_str):
     try:
         token = str.encode(token_str)
@@ -58,6 +59,7 @@ def token_auth(token_str):
         user = None
 
     return user
+
 
 if __name__ == "__main__":
     user = {
